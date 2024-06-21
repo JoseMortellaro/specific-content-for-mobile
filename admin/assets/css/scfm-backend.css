@@ -1,0 +1,150 @@
+#eos_scfm_device .dashicons {
+    display: inline-block
+}
+#eos_scfm_device,
+#the-list .eos_scfm_device,
+.wp-list-table .column-eos_scfm_device{
+	width:60px;
+	text-align:center
+}
+.scfm-top-32{
+	margin-top:32px
+}
+.scfm-top-16{
+	margin-top:16px
+}
+.sfc-button a{
+	text-decoration:none;
+	text-transform:uppercase
+}
+select.eos-scfm-option{
+	max-width:100%
+}
+input.eos-scfm-option[disabled] {
+    color: initial;
+    width: 100%;
+    background: transparent;
+    border-style: none;
+	box-shadow:none
+}
+.scfm-menu-mobile #update-nav-menu,
+.scfm-menu-tablet #update-nav-menu{
+	position:relative
+}
+.scfm-menu-mobile #update-nav-menu:before,
+.scfm-menu-tablet #update-nav-menu:before{
+	font-family:dashicons;
+	font-size:32px;
+	position:absolute;
+	left:100%;
+	margin-left:-25px
+}
+.rtl.scfm-menu-mobile #update-nav-menu:before,
+.rtl.scfm-menu-tablet #update-nav-menu:before{
+	right:100%;
+	margin-right:-25px
+}
+.scfm-menu-mobile #update-nav-menu:before{
+	content:"\f470"
+}
+.scfm-menu-tablet #update-nav-menu:before{
+	content:"\f471"
+}
+.scfm-before-icon-title{
+    position: absolute;
+    top: -3px;
+    left: -23px;
+    font-size: 29px;
+}
+.rtl .scfm-before-icon-title{
+    right: -23px;
+}
+
+.scfm-settings-page section{
+	margin-top:32px;
+	margin-bottom:64px
+}
+.scfm-settings-page section .dashicons,
+.scfm-settings-page h2 .dashicons{
+	margin-right:14px;
+	font-size:26px
+}
+.rtl.scfm-settings-page section .dashicons{
+	margin-left:14px
+}
+.scfm-subsection{
+	margin-bottom:32px
+}
+#eos-scfm-save-options{
+    background: #000;
+    border-color: transparent;
+    border-radius: 0;
+    box-shadow: none;
+    color: #fff;
+    text-shadow: none
+}
+.eos-scfm-btn-wrp{
+    position:fixed;
+    bottom:35px;
+    right:0;
+    z-index:99999;
+	text-align:right;
+    min-height:94px
+}
+.scfm-table{
+	border-collapse: collapse;
+}
+.scfm-table td,
+.scfm-table th{
+	border:1px solid #000;
+	padding:6px;
+	vertical-align:middle;
+	text-align:center
+}
+.scfm-menu-item-device,
+.scfm-menu-item-device:focus,
+.scfm-menu-item-device:active,
+.scfm-menu-item-device:checked{
+	border:none !important
+}
+.scfm-menu-item-device{
+	opacity:1;
+	position:relative;
+    font-family: dashicons;
+    display: inline-block;
+    line-height: 1 !important;
+    font-weight: 400;
+    font-style: normal;
+    text-transform: none;
+    width: 40px !important;
+    height: 40px !important;
+    font-size: 45px !important;
+    vertical-align: top !important;
+    text-align: center !important;
+}
+.scfm-menu-item-device:checked{
+	opacity:0.6
+}
+.scfm-menu-item-desktop:before{
+	margin:0 !important;
+	content: "\f472" !important
+}
+.scfm-menu-item-mobile:before{
+	content:"\f470" !important
+}
+.scfm-menu-item-tablet:before{
+	content: "\f471" !important
+}
+.rtl .eos-scfm-btn-wrp{
+	text-align:left
+}
+.rtl #eos-scfm-save-options{
+	right:auto;
+	left:0
+}
+.eos-hidden{
+	display:none !important
+}
+.eos-not-visible{
+	visibility:hidden !important
+}

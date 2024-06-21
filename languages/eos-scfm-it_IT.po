@@ -1,0 +1,136 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: Specific Content for Mobile\n"
+"POT-Creation-Date: 2019-08-11 09:47+0200\n"
+"PO-Revision-Date: 2019-08-11 09:49+0200\n"
+"Last-Translator: Giuseppe <giu09.mor@gmail.com>\n"
+"Language-Team: Giuseppe <giu09.mor@gmail.com>\n"
+"Language: it_IT\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Generator: Poedit 2.2.3\n"
+"X-Poedit-Basepath: ..\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+"X-Poedit-Flags-xgettext: --add-comments=translators:\n"
+"X-Poedit-WPHeader: specific-content-for-mobile.php\n"
+"X-Poedit-SourceCharset: UTF-8\n"
+"X-Poedit-KeywordsList: __;_e;_n:1,2;_x:1,2c;_ex:1,2c;_nx:4c,1,2;esc_attr__;"
+"esc_attr_e;esc_attr_x:1,2c;esc_html__;esc_html_e;esc_html_x:1,2c;"
+"_n_noop:1,2;_nx_noop:3c,1,2;__ngettext_noop:1,2\n"
+"X-Poedit-SearchPath-0: .\n"
+"X-Poedit-SearchPathExcluded-0: *.min.js\n"
+
+#: admin/scfm-admin.php:58 admin/scfm-admin.php:62
+msgid "No post for mobile has been supplied!"
+msgstr "Non è stato fornito alcun post per la versione mobile!"
+
+#: admin/scfm-admin.php:128
+#, php-format
+msgid "Mobile version failed, could not find original post: %s"
+msgstr ""
+"Versione mobile non riuscita, Impossibile trovare il post originale: %s"
+
+#: admin/scfm-admin.php:139
+msgid " Edit mobile version"
+msgstr " Modifica versione mobile"
+
+#: admin/scfm-admin.php:139
+msgid "Edit mobile version"
+msgstr "Modifica versione mobile"
+
+#: admin/scfm-admin.php:144 admin/scfm-admin.php:148 admin/scfm-admin.php:232
+msgid " Create mobile version"
+msgstr " Crea versione mobile"
+
+#: admin/scfm-admin.php:144
+msgid "Create mobile version"
+msgstr "Crea versione mobile"
+
+#: admin/scfm-admin.php:148
+msgid "Preview"
+msgstr "Anteprima"
+
+#: admin/scfm-admin.php:168
+#, php-format
+msgid "The content you are editing is the mobile version of %s%s%s"
+msgstr "Il contenuto che si sta modificando è la versione mobile di %s%s%s"
+
+#: admin/scfm-admin.php:176
+#, php-format
+msgid "The content you are editing has a mobile version titled %s%s%s"
+msgstr ""
+"Il contenuto che si sta modificando ha una versione mobile denominata %s%s%s"
+
+#: admin/scfm-admin.php:195
+msgid ""
+"This mobile version is public, this is not good for SEO. Better you make it "
+"private"
+msgstr ""
+"Questa versione mobile è pubblica, questo non è un bene per il SEO. Meglio "
+"renderla privata"
+
+#: admin/scfm-admin.php:197
+#, php-format
+msgid "%s Mobile Version of %s"
+msgstr "%s Versione mobile di %s"
+
+#: admin/scfm-admin.php:228
+msgid "Edit Desktop version"
+msgstr "Modifica versione desktop"
+
+#: admin/scfm-admin.php:229
+msgid "Edit Mobile version"
+msgstr "Modifica versione mobile"
+
+#: admin/scfm-admin.php:237
+msgid ""
+"Your theme doesn't declare full support for the blog page mobile version, "
+"something may not work as expected on the blog mobile version"
+msgstr ""
+"Il tuo tema non dichiara il supporto completo per la versione mobile della "
+"pagina del blog, qualcosa potrebbe non funzionare come previsto sulla "
+"versione mobile del blog"
+
+#: admin/scfm-admin.php:277
+msgid "Mobile version"
+msgstr "Versione Mobile"
+
+#: admin/scfm-admin.php:295
+#, php-format
+msgid "You are editing the mobile version of %s"
+msgstr "Il contenuto che si sta modificando è la versione mobile di %s"
+
+#: admin/scfm-admin.php:302
+msgid "Pages Settings"
+msgstr "Impostazioni pagine"
+
+#: admin/scfm-admin.php:303
+msgid "Posts Settings"
+msgstr "Impostazioni Articoli"
+
+#: admin/scfm-admin.php:318
+msgid ""
+"Mobile versions should not be public, make it private if you don't want SEO "
+"problems."
+msgstr ""
+"Le versioni mobile non dovrebbero essere pubbliche, salva come privato se "
+"non vuoi problemi con il SEO."
+
+#. Plugin Name of the plugin/theme
+msgid "Specific Content for Mobile"
+msgstr ""
+
+#. Description of the plugin/theme
+msgid "It allows you to customize the content for mobile devices."
+msgstr ""
+"Consente di personalizzare il contenuto di pagine e articoli per i "
+"dispositivi mobili."
+
+#. Author of the plugin/theme
+msgid "Jose Mortellaro"
+msgstr ""
+
+#. Author URI of the plugin/theme
+msgid "https://josemortellaro.com/"
+msgstr ""
