@@ -1,8 +1,8 @@
 === Specific Content For Mobile - Customize the mobile version without redirections ===
 Contributors: giuse
 Requires at least: 4.6
-Tested up to: 6.5
-Stable tag: 0.1.9.7
+Tested up to: 6.6
+Stable tag: 0.1.9.8
 Requires PHP: 5.6
 Donate link: buymeacoffee.com/josem
 License: GPLv2 or later
@@ -195,6 +195,9 @@ For any question or if something doesn't work, don't hesitate to open a thread o
 
 
 == Changelog ==
+
+= 0.1.9.8 =
+* Fix: PHP warning in the backend single page
 
 = 0.1.9.7 =
 * Fix: Security patch. Nonce not added when unlinking mobile and desktop versions via bulk actions

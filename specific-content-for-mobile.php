@@ -6,7 +6,7 @@ Author: Jose Mortellaro
 Author URI: https://josemortellaro.com/
 Text Domain: eos-scfm
 Domain Path: /languages/
-Version: 0.1.9.7
+Version: 0.1.9.8
 */
 /*  This program is free software; you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by
@@ -23,7 +23,7 @@ defined( 'ABSPATH' ) || exit; // Exit if accessed directly.
 //Definitions
 define( 'EOS_SCFM_PLUGIN_DIR',untrailingslashit( dirname( __FILE__ ) ) );
 define( 'EOS_SCFM_PLUGIN_URL', untrailingslashit( plugins_url( '', __FILE__ ) ) );
-define( 'EOS_SCFM_PLUGIN_VERSION','0.1.9.7' );
+define( 'EOS_SCFM_PLUGIN_VERSION','0.1.9.8' );
 define( 'EOS_SCFM_PLUGIN_BASE_NAME',untrailingslashit( plugin_basename( __FILE__ ) ) );
 
 if( isset( $_REQUEST['ct_builder'] ) || isset( $_REQUEST['zionbuilder-preview'] ) || ( isset( $_REQUEST['action'] ) && in_array( $_REQUEST['action'],array( 'oxy_render_nav_menu','zion_builder_active' ) ) ) ) return;

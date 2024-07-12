@@ -159,35 +159,6 @@ function eos_scfm_duplicate_post_link( $actions,$post ) {
 	return $actions;
 }
 
-add_action( 'admin_notices', 'eos_scfm_notices',10,2 );
-// It adds the warnings in the backend single page.
-function eos_scfm_notices(){
-	if( !isset( $_GET['post'] ) ) return;
-	global $post;
-	if( !is_object( $post ) ) return;
-	$desktop_post_id = absint( get_post_meta( $post->ID,'eos_scfm_desktop_post_id',true ) );
-	$notice = false;
-	if( $desktop_post_id > 0 ){
-		$desktop_post = get_post( $desktop_post_id );
-		if( is_object( $desktop_post ) ){
-			$desktop_title = $desktop_post->post_title;
-			$notice = '<span class="dashicons dashicons-smartphone"></span>'.sprintf( __( 'The content you are editing is the mobile version of %s%s%s','eos-scfm' ),'<strong>',$desktop_title,'</strong>' );
-		}
-	}
-	$mobile_post_id = absint( get_post_meta( $post->ID,'eos_scfm_mobile_post_id',true ) );
-	if( $mobile_post_id > 0 ){
-		$mobile_post = get_post( $mobile_post_id );
-		if( !is_object( $mobile_post ) ){
-			$mobile_title = $mobile_post->post_title;
-			$notice = sprintf( __( 'The content you are editing has a mobile version titled %s%s%s','eos-scfm' ),'<strong>',$mobile_title,'</strong>' );
-		}
-	}
-	if( $notice ){
-	?>
-	<div class="notice notice-warning is-dismissible"><p><?php echo wp_kses( $notice,array( 'strong'=>array(),'span' => array( 'class' => array() ) ) ); ?></p></div>
-	<?php
-	}
-}
 add_filter( 'display_post_states','eos_scfm_post_status',2,99 );
 //It adds the mobile version status in the posts table
 function eos_scfm_post_status( $states,$post ){
@@ -341,7 +312,7 @@ function eos_scfm_metabox_callback( $post ){
 	$actions = eos_scfm_duplicate_post_link( array(),$post );
 	if( !empty( $actions ) ){
 		foreach( $actions as $action ){
-			echo '<span class="sfc-button button">'.$action.'</span>';
+			echo '<span class="sfc-button button">' . $action . '</span>';
 		}
 	}
 }
