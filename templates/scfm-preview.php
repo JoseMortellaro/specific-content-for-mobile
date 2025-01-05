@@ -20,7 +20,7 @@ $src = esc_url( add_query_arg( $args,$url ) );
 		<meta charset="<?php bloginfo( 'charset' ); ?>" />
 		<meta name="viewport" content="width=device-width, minimum-scale=1.0, maximum-scale=1.0" />
 		<meta name="robots" content="noindex,nofollow,noarchive">
-		<title><?php echo is_object( $desktop_post ) ? esc_html( $desktop_post->post_title ).' | '.esc_html__( 'Mobile Preview','eos-scfml' ) : esc_html__( 'Mobile Preview','eos-scfml' ); ?></title>
+		<title><?php echo is_object( $desktop_post ) ? esc_html( $desktop_post->post_title ).' | '.esc_html__( 'Mobile Preview','specific-content-for-mobile' ) : esc_html__( 'Mobile Preview','specific-content-for-mobile' ); ?></title>
 		<style>
 		.eos-hidden,
 		.scfm-mobile-phone #scfm-tablet-wrp,
@@ -107,14 +107,14 @@ $src = esc_url( add_query_arg( $args,$url ) );
 			}			
 			#scfm-phone-wrp,
 			#scfm-show-phone{
-				background-image:url(<?php echo EOS_SCFM_PLUGIN_URL; ?>/assets/img/scfm-phone.png);
+				background-image:url(<?php echo esc_url( EOS_SCFM_PLUGIN_URL . '/assets/img/scfm-phone.png' ); ?>);
 				background-repeat:no-repeat;
 			}
 			#scfm-to-landscape{
-				background-image:url(<?php echo EOS_SCFM_PLUGIN_URL; ?>/assets/img/scfm-to-landscape-icon.jpg);
+				background-image:url(<?php echo esc_url( EOS_SCFM_PLUGIN_URL . '/assets/img/scfm-to-landscape-icon.jpg' ); ?>);
 			}
 			#scfm-to-portrait{
-				background-image:url(<?php echo EOS_SCFM_PLUGIN_URL; ?>/assets/img/scfm-to-portrait-icon.jpg);
+				background-image:url(<?php echo esc_url( EOS_SCFM_PLUGIN_URL . '/assets/img/scfm-to-portrait-icon.jpg'); ?>);
 			}
 			#scfm-to-landscape,
 			#scfm-to-portrait{
@@ -129,7 +129,7 @@ $src = esc_url( add_query_arg( $args,$url ) );
 				margin:0 auto
 			}
 			.scfm-rotated #scfm-phone-wrp{
-				background-image:url(<?php echo EOS_SCFM_PLUGIN_URL; ?>/assets/img/scfm-phone-rotated.png);
+				background-image:url(<?php echo esc_url( EOS_SCFM_PLUGIN_URL . '/assets/img/scfm-phone-rotated.png'); ?>);
 				background-repeat:no-repeat;
 				background-size:cover;
 				position:relative;
@@ -139,7 +139,7 @@ $src = esc_url( add_query_arg( $args,$url ) );
 			}
 			#scfm-tablet-wrp,
 			#scfm-show-tablet{
-				background-image:url(<?php echo EOS_SCFM_PLUGIN_URL; ?>/assets/img/scfm-tablet.png);
+				background-image:url(<?php echo esc_url( EOS_SCFM_PLUGIN_URL . '/assets/img/scfm-tablet.png'); ?>);
 				background-repeat:no-repeat
 			}
 			#scfm-show-tablet,
@@ -155,7 +155,7 @@ $src = esc_url( add_query_arg( $args,$url ) );
 				margin:48px auto				
 			}
 			.scfm-rotated #scfm-tablet-wrp{
-				background-image:url(<?php echo EOS_SCFM_PLUGIN_URL; ?>/assets/img/scfm-tablet-rotated.png);
+				background-image:url(<?php echo esc_url( EOS_SCFM_PLUGIN_URL . '/assets/img/scfm-tablet-rotated.png'); ?>);
 				background-repeat:no-repeat;
 				background-size:cover;
 				position:relative;
@@ -193,16 +193,16 @@ $src = esc_url( add_query_arg( $args,$url ) );
 	<body class="scfm-preview scfm-mobile-phone">
 		<?php if( is_object( $desktop_post ) ){ ?>
 		<h1 id="scfm-preview-title"><?php echo esc_html( $desktop_post->post_title ); ?></h1>
-		<h2 id="scfm-preview-subtitle"><?php printf( esc_html__( 'Mobile preview of %s','eos-scfm' ),get_permalink( $desktop_id ) ); ?></h2>
-		<p id="scfm-preview-description"><?php printf( esc_html__( 'Content (from ID %s) replaced with the content of the mobile version (from ID %s)','eos-scfm' ),$desktop_id,$post->ID ); ?></p>
+		<h2 id="scfm-preview-subtitle"><?php printf( esc_html__( 'Mobile preview of %s','specific-content-for-mobile' ), esc_url( get_permalink( $desktop_id ) ) ); ?></h2>
+		<p id="scfm-preview-description"><?php printf( esc_html__( 'Content (from ID %s) replaced with the content of the mobile version (from ID %s)','specific-content-for-mobile' ), esc_html( $desktop_id ), esc_html( $post->ID ) ); ?></p>
 		<?php } ?>		
 		<div class="scfm-buttons-wrp">
-			<span id="scfm-show-phone-wrp" class="scfm-btn"><span id="scfm-show-phone" class="scfm-button" title="<?php esc_attr_e( 'Preview on phone','eos-scfm' ); ?>"></span></span>
+			<span id="scfm-show-phone-wrp" class="scfm-btn"><span id="scfm-show-phone" class="scfm-button" title="<?php esc_attr_e( 'Preview on phone','specific-content-for-mobile' ); ?>"></span></span>
 			<?php if( eos_scfm_is_tablet_mobile() ){ ?>
-			<span id="scfm-show-tablet-wrp" class="scfm-btn"><span id="scfm-show-tablet" class="scfm-button" title="<?php esc_attr_e( 'Preview on tablet','eos-scfm' ); ?>"></span></span>
+			<span id="scfm-show-tablet-wrp" class="scfm-btn"><span id="scfm-show-tablet" class="scfm-button" title="<?php esc_attr_e( 'Preview on tablet','specific-content-for-mobile' ); ?>"></span></span>
 			<?php } ?>
-			<span id="scfm-to-landscape-wrp" class="scfm-btn"><span id="scfm-to-landscape" class="scfm-button" title="<?php esc_attr_e( 'Rotate device','eos-scfm' ); ?>"></span></span>
-			<span id="scfm-to-portrait-wrp" class="scfm-btn"><span id="scfm-to-portrait" class="scfm-button" title="<?php esc_attr_e( 'Rotate device','eos-scfm' ); ?>"></span></span>
+			<span id="scfm-to-landscape-wrp" class="scfm-btn"><span id="scfm-to-landscape" class="scfm-button" title="<?php esc_attr_e( 'Rotate device','specific-content-for-mobile' ); ?>"></span></span>
+			<span id="scfm-to-portrait-wrp" class="scfm-btn"><span id="scfm-to-portrait" class="scfm-button" title="<?php esc_attr_e( 'Rotate device','specific-content-for-mobile' ); ?>"></span></span>
 		</div>
 		<div id="scfm-phone-wrp">
 			<iframe id="scfm-phone-iframe" src="<?php echo esc_url( $src ); ?>"></iframe>

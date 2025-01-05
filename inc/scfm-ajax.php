@@ -1,7 +1,5 @@
 <?php
-if ( ! defined( 'ABSPATH' ) ) {
-	exit; // Exit if accessed directly
-}
+defined( 'ABSPATH' ) || exit; // Exit if accessed directly.
 
 add_action( 'wp_ajax_eos_scfm_suggest_page','eos_scfm_suggest_page' );
 //Suggest page to the input field
@@ -34,7 +32,7 @@ function eos_scfm_suggest_page(){
 	else {
 			$results = 'No results';
 	}
-	echo join( "\n",$results );
+	echo join( "\n",  $results ); //phpcs:ignore WordPress.Security.EscapeOutput -- The escaping was already applied while filling $results.
 	wp_die();
 }
 
@@ -64,7 +62,7 @@ function eos_scfm_save_settings(){
 		}
 	}
 	$options['active_post_types'] = $active_post_types;
-	echo update_site_option( 'eos_scfm_main',$options ) ? esc_html__( 'Options Saved','eos-scfm' ) : esc_html__( 'Nothing changed','eos-scfm' );
+	echo update_site_option( 'eos_scfm_main',$options ) ? esc_html__( 'Options Saved','specific-content-for-mobile' ) : esc_html__( 'Nothing changed','specific-content-for-mobile' );
 	die();
 	exit; //no code anymore
 }

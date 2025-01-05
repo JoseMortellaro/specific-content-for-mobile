@@ -1,10 +1,9 @@
 === Specific Content For Mobile - Customize the mobile version without redirections ===
 Contributors: giuse
 Requires at least: 4.6
-Tested up to: 6.6
-Stable tag: 0.1.9.8
+Tested up to: 6.7
+Stable tag: 0.5.3
 Requires PHP: 5.6
-Donate link: buymeacoffee.com/josem
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 Tags: optimization, mobile, cleanup, amp, device
@@ -21,6 +20,8 @@ This plugin <strong>DOES NOT</strong> redirect content from the desktop website:
 It's perfect if in some pages you need different content for the mobile version.
 
 The best way to have a mobile version is always a fully responsive design, but in some cases you may need <strong>specific content for the mobile version</strong>.
+
+[youtube https://youtu.be/-vc3zBI9Prw]
 
 
 == How to add or remove specific content for the mobile version: ==
@@ -42,6 +43,7 @@ The page reachable at https://your-domain.com/page-example/ will show the deskto
 
 You have <strong>no redirections</strong>, and the plugin just replaces the desktop content with the related mobile version.
 
+For more details read the <a href="https://specific-content-for-mobile.com/documentation/">Documentation</a>.
 
 
 
@@ -77,9 +79,9 @@ If you want to change this behavior, go to Specific Content For Mobile settings 
 For the most popular SEO plugins, you can choose the metadata synchronization specifically for that plugin.
 
 
-== <a href="https://shop.josemortellaro.com/downloads/specific-content-for-mobile-pro/">PRO Version</a> ==
+== <a href="https://specific-content-for-mobile.com/documentation/">PRO Version</a> ==
 
-= The <a href="https://shop.josemortellaro.com/downloads/specific-content-for-mobile-pro/">PRO version</a> also allows you to: =
+= The <a href="https://specific-content-for-mobile.com/documentation/">PRO version</a> also allows you to: =
 * Have a mobile version of all the queriable post types are supported
 * Load a different theme specifically on mobile devices
 * Unload specific plugins only on mobile devices
@@ -174,7 +176,8 @@ add_theme_support('specific_content_form_mobile',array( 'posts_page' => true ) )
 
 == Help ==
 
-For any question or if something doesn't work, don't hesitate to open a thread on the <a href="https://wordpress.org/support/plugin/specific-content-for-mobile/">support forum</a>
+If something doesn't work on the free version, open a thread on the <a href="https://wordpress.org/support/plugin/specific-content-for-mobile/">support forum</a>
+If you are a PRO user, and you have issues, don't hesitate to open a ticket on the <a href="https://specific-content-for-mobile.com/support/">premium support</a>
 
 
 
@@ -195,6 +198,47 @@ For any question or if something doesn't work, don't hesitate to open a thread o
 
 
 == Changelog ==
+
+= 0.5.3 =
+* Added: Hidden ?scfm-mobile=1 on mobile devices
+
+= 0.5.2 =
+* Added: Minor updates
+
+= 0.5.1 =
+* Fix: Conflict with the Elementor editing page
+
+= 0.5.0 =
+* Fix: Edit mobile and desktop version in the single page editing screen
+
+= 0.4.0 =
+* Checked: WordPress 6.7
+* Fix: Missing escaping funcitons on mobile preview
+
+= 0.3.0 =
+* Fix: Mobile version not redirecting to desktop version on desktop.
+
+= 0.2.5 =
+* Fix: WooCommerce actions not working.
+
+= 0.2.4 =
+* Added: Rewrite rules to avoid serving the mobile cache to desktop devices and viceversa
+
+= 0.2.3 =
+* FIx: False detection message
+* FIx: Domain name different than plugin slug
+
+= 0.2.2 =
+* FIx: Conflict with Visual Composer
+
+= 0.2.1 =
+* FIx: Duplicated posts in the Recent Posts widget
+
+= 0.2.0 =
+* FIx: Fatal error if other plugins do array of actions
+
+= 0.1.9.9 =
+* FIx: Mobile pages shown in the desktop search results if user not logged in
 
 = 0.1.9.8 =
 * Fix: PHP warning in the backend single page

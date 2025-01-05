@@ -8,12 +8,12 @@ function eos_scfm_meta_integration_array( $options ){
 		'wpseo_meta' => array(
 			'is_active' => defined( 'WPSEO_FILE' ),
 			'args' => array(
-				'title' => __( 'Yoast SEO Meta synchronization','eos-scfm' ),
+				'title' => __( 'Yoast SEO Meta synchronization','specific-content-for-mobile' ),
 				'type' => 'select',
 				'value' => isset( $other_meta['wpseo_meta'] ) ? esc_attr( $other_meta['wpseo_meta'] ) : 'synchronized',
 				'options' => array(
-					'synchronized' => __( 'Synchronize desktop and mobile metadata','eos-scfm' ),
-					'separated' => __( 'Allow mobile versions having their own metadata','eos-scfm' )
+					'synchronized' => __( 'Synchronize desktop and mobile metadata','specific-content-for-mobile' ),
+					'separated' => __( 'Allow mobile versions having their own metadata','specific-content-for-mobile' )
 				),
 			),
 			'prefix' => array( '_yoast' ),
@@ -22,12 +22,12 @@ function eos_scfm_meta_integration_array( $options ){
 		'aiosp' => array(
 			'is_active' => defined( 'AIOSEO_PLUGIN_DIR' ),
 			'args' => array(
-				'title' => __( 'All in One Seo Pack Meta synchronization','eos-scfm' ),
+				'title' => __( 'All in One Seo Pack Meta synchronization','specific-content-for-mobile' ),
 				'type' => 'select',
 				'value' => isset( $other_meta['aiosp'] ) ? esc_attr( $other_meta['aiosp'] ) : 'synchronized',
 				'options' => array(
-					'synchronized' => __( 'Synchronize desktop and mobile metadata','eos-scfm' ),
-					'separated' => __( 'Allow mobile versions having their own metadata','eos-scfm' )
+					'synchronized' => __( 'Synchronize desktop and mobile metadata','specific-content-for-mobile' ),
+					'separated' => __( 'Allow mobile versions having their own metadata','specific-content-for-mobile' )
 				),
 			),
 			'prefix' => array( '_aioseop' ),
@@ -36,12 +36,12 @@ function eos_scfm_meta_integration_array( $options ){
 		'tsf_inpost_box' => array(
 			'is_active' => defined( 'THE_SEO_FRAMEWORK_BOOTSTRAP_PATH' ),
 			'args' => array(
-				'title' => __( 'The SEO Framework Meta synchronization','eos-scfm' ),
+				'title' => __( 'The SEO Framework Meta synchronization','specific-content-for-mobile' ),
 				'type' => 'select',
 				'value' => isset( $other_meta['tsf_inpost_box'] ) ? esc_attr( $other_meta['tsf_inpost_box'] ) : 'synchronized',
 				'options' => array(
-					'synchronized' => __( 'Synchronize desktop and mobile metadata','eos-scfm' ),
-					'separated' => __( 'Allow mobile versions having their own metadata','eos-scfm' )
+					'synchronized' => __( 'Synchronize desktop and mobile metadata','specific-content-for-mobile' ),
+					'separated' => __( 'Allow mobile versions having their own metadata','specific-content-for-mobile' )
 				),
 			),
 			'prefix' => array( '_genesis','_open_graph','_social','_twitter' ),
@@ -50,12 +50,12 @@ function eos_scfm_meta_integration_array( $options ){
 		'seopress_cpt' => array(
 			'is_active' => defined( 'SEOPRESS_VERSION' ),
 			'args' => array(
-				'title' => __( 'The SEOPress Meta synchronization','eos-scfm' ),
+				'title' => __( 'The SEOPress Meta synchronization','specific-content-for-mobile' ),
 				'type' => 'select',
 				'value' => isset( $other_meta['seopress_cpt'] ) ? esc_attr( $other_meta['seopress_cpt'] ) : 'synchronized',
 				'options' => array(
-					'synchronized' => __( 'Synchronize desktop and mobile metadata','eos-scfm' ),
-					'separated' => __( 'Allow mobile versions having their own metadata','eos-scfm' )
+					'synchronized' => __( 'Synchronize desktop and mobile metadata','specific-content-for-mobile' ),
+					'separated' => __( 'Allow mobile versions having their own metadata','specific-content-for-mobile' )
 				),
 			),
 			'prefix' => array( '_seopress' ),

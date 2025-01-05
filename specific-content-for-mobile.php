@@ -4,9 +4,10 @@ Plugin Name: Specific Content for Mobile
 Description: It allows you to create specific content for the mobile version.
 Author: Jose Mortellaro
 Author URI: https://josemortellaro.com/
-Text Domain: eos-scfm
+Plugin URI: https://specific-content-for-mobile.com/
+Text Domain: specific-content-for-mobile
 Domain Path: /languages/
-Version: 0.1.9.8
+Version: 0.5.3
 */
 /*  This program is free software; you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by
@@ -20,13 +21,28 @@ GNU General Public License for more details.
 
 defined( 'ABSPATH' ) || exit; // Exit if accessed directly.
 
-//Definitions
-define( 'EOS_SCFM_PLUGIN_DIR',untrailingslashit( dirname( __FILE__ ) ) );
+// Definitions.
+define( 'EOS_SCFM_PLUGIN_DIR', untrailingslashit( dirname( __FILE__ ) ) );
 define( 'EOS_SCFM_PLUGIN_URL', untrailingslashit( plugins_url( '', __FILE__ ) ) );
-define( 'EOS_SCFM_PLUGIN_VERSION','0.1.9.8' );
-define( 'EOS_SCFM_PLUGIN_BASE_NAME',untrailingslashit( plugin_basename( __FILE__ ) ) );
+define( 'EOS_SCFM_PLUGIN_VERSION', '0.5.2' );
+define( 'EOS_SCFM_PLUGIN_BASE_NAME', untrailingslashit( plugin_basename( __FILE__ ) ) );
 
-if( isset( $_REQUEST['ct_builder'] ) || isset( $_REQUEST['zionbuilder-preview'] ) || ( isset( $_REQUEST['action'] ) && in_array( $_REQUEST['action'],array( 'oxy_render_nav_menu','zion_builder_active' ) ) ) ) return;
+if( isset( $_GET['scfm-mobile'] ) ) {
+	unset( $_GET['scfm-mobile'] );
+}
+if( isset( $_REQUEST['scfm-mobile'] ) ) {
+	unset( $_REQUEST['scfm-mobile'] );
+}
+
+if( 
+	isset( $_REQUEST['ct_builder'] ) 
+	|| isset( $_REQUEST['zionbuilder-preview'] ) 
+	|| ( isset( $_REQUEST['action'] ) && is_string( $_REQUEST['action'] ) && in_array( $_REQUEST['action'],array( 'oxy_render_nav_menu','zion_builder_active','elementor', 'elementor-preview' ) ) ) 
+	|| ( isset( $_REQUEST['vcv-source-id'] ) )
+	|| ( isset( $_REQUEST['elementor-preview'] ) )
+) {
+	return;
+}
 
 if( is_admin() ){
 	//Backend
@@ -36,17 +52,31 @@ if( is_admin() ){
 else{
 	//Frontend
 	if( ( isset( $_GET['uxb_iframe'] ) && isset( $_GET['post_id'] ) ) || apply_filters( 'scfm_exclude_frontend',false ) ) return;
-	add_action( 'template_redirect','eos_scfm_post_content_replacement' );
+	add_action( 'template_redirect','eos_scfm_redirect_to_desktop', 10 );
+	add_action( 'template_redirect','eos_scfm_post_content_replacement', 20 );
 }
 if(
 	defined( 'DOING_AJAX' )
 	&& DOING_AJAX
 	&& isset( $_REQUEST['action'] )
-	&& false !== strpos( $_REQUEST['action'],'eos_scfm' )
+	&& is_string( $_REQUEST['action'] ) && false !== strpos( sanitize_text_field( $_REQUEST['action'] ),'eos_scfm' )
 ){
 	//Ajax activities
 	require_once EOS_SCFM_PLUGIN_DIR.'/inc/scfm-ajax.php';
 }
+
+// Redirect to the desktop page if 
+function eos_scfm_redirect_to_desktop() {
+	global $post;
+	if( $post && is_object( $post ) && isset( $_SERVER['REQUEST_URI'] ) && false !== strpos( $_SERVER['REQUEST_URI'], '-' . apply_filters( 'scfm_mobile_slug','mobile' ) ) ) {
+		$desktop_post_id = eos_scfm_related_desktop_id( $post->ID );
+		if( $desktop_post_id > 0 && $post->ID !== $desktop_post_id && function_exists( 'is_preview' ) && ! is_preview() && ! is_customize_preview() ){
+			wp_safe_redirect( get_permalink( $desktop_post_id ),301 );
+			exit;
+		}
+	}
+}
+
 
 //It replaces the post content with the mobile version
 function eos_scfm_post_content_replacement(){
@@ -63,13 +93,7 @@ function eos_scfm_post_content_replacement(){
 	if( isset( $_REQUEST['eos_dp_preview'] ) ) return;
 	global $post;
 	if( !is_singular() || !is_object( $post ) ) return;
-	if( isset( $_SERVER['REQUEST_URI'] ) && false !== strpos( $_SERVER['REQUEST_URI'],'-'.apply_filters( 'scfm_mobile_slug','mobile' ) ) ){
-		$desktop_post_id = eos_scfm_related_desktop_id( $post->ID );
-		if( $desktop_post_id > 0 && $post->ID !== $desktop_post_id && function_exists( 'is_preview' ) && !is_preview() && !is_customize_preview() ){
-			wp_safe_redirect( get_permalink( $desktop_post_id ),301 );
-			exit;
-		}
-	}
+
 	if( !scfm_wp_is_mobile() ) return;
 	$mobile_post_id = eos_scfm_related_mobile_id( $post-> ID );
 	if( $mobile_post_id > 0 ){
@@ -83,10 +107,10 @@ function eos_scfm_post_content_replacement(){
 				$post->post_excerpt = $mobile_post->post_excerpt;
 			}
 			$post->post_content_filtered = $mobile_post->post_content;
-			add_filter( 'body_class','eos_scfm_body_class' );
 		}
 	}
 }
+
 add_filter( 'single_template','eos_scfm_single_template' );
 add_filter( 'page_template','eos_scfm_single_template' );
 //Filter the single_template for the mobile preview
@@ -125,19 +149,29 @@ function eos_scfm_add_mobile_style(){
 	</style>
 	<?php
 }
-//Add body class on mobile
+
+add_filter( 'body_class','eos_scfm_body_class' );
+// Add body class on mobile.
 function eos_scfm_body_class( $classes ){
-	$classes[] = 'scfm-mobile';
-	if( isset( $GLOBALS['desktop_id'] ) ){
-		$classes[] = 'scfm-desktop-'.esc_attr( $GLOBALS['desktop_id'] );
+	$classes[] = 'scfm';
+	$arr = eos_scfm_data_array();
+	if( isset( $arr['desktop_id'] ) ){
+		$classes[] = 'scfm-desktop-'.esc_attr( $arr['desktop_id'] );
 	}
-	if( isset( $GLOBALS['mobile_id'] ) ){
-		$classes[] = 'scfm-mobile-'.esc_attr( $GLOBALS['mobile_id'] );
+	if( isset( $arr['mobile_id'] ) ){
+		$classes[] = 'scfm-mobile-'.esc_attr( $arr['mobile_id'] );
+	}
+	if( isset( $arr['device'] ) ){
+		$classes[] = 'eos-scfm-d-'.esc_attr( $arr['device'] ) . '-device';
+	}
+	if( isset( $arr['microtime'] ) ){
+		$classes[] = 'eos-scfm-t-'.esc_attr( str_replace( '.', '-', $arr['microtime'] ) ) . '-timestamp';
 	}
 	return $classes;
 }
 
-add_action( 'wp_footer',function(){
+// Return array of data.
+function eos_scfm_data_array() {
 	$arr = array( 'time' => date( 'd M Y h:i:s a',time() ),'microtime' => microtime(1),'device' => isset( $GLOBALS['desktop_id'] ) ? 'mobile' : 'desktop' );
 	if( isset( $GLOBALS['desktop_id'] ) ){
 		$arr['desktop_id'] = absint( $GLOBALS['desktop_id'] );
@@ -145,9 +179,28 @@ add_action( 'wp_footer',function(){
 	if( isset( $GLOBALS['mobile_id'] ) ){
 		$arr['mobile_id'] = absint( $GLOBALS['mobile_id'] );
 	}
-?>
-<script id="scfm-js">var scfm = <?php echo wp_json_encode( $arr ); ?></script>
-<?php
+	return $arr;
+}
+
+add_action( 'wp_footer',function(){
+	$arr = eos_scfm_data_array();
+	?>
+	<script id="scfm-js">var scfm = <?php echo wp_json_encode( $arr ); ?></script>
+	<?php
+} );
+
+add_action( 'wp_head',function(){
+	?>
+	<script id="scfm-url-js">
+	if (window.location.search.includes('scfm-mobile=1')) {
+		const url = new URL(window.location.href);
+		const searchParams = url.searchParams;
+		searchParams.delete('scfm-mobile');
+		const newUrl = url.origin + url.pathname + (searchParams.toString() ? "?" + searchParams.toString() : "") + url.hash;
+		window.history.replaceState(null, "", newUrl);
+	}
+	</script>
+	<?php
 } );
 
 if( scfm_wp_is_mobile() ){
@@ -176,25 +229,23 @@ function eos_scfm_filter_post_status(  $post_status ){
 add_action( 'pre_get_posts', 'eos_scfm_filter_pre_get_posts' );
 //Exclude mobile versions of posts from archives
 function eos_scfm_filter_pre_get_posts( $query ) {
-	if( function_exists( 'is_user_logged_in' ) && is_user_logged_in() ){
-	  if ( !is_singular() && !is_admin() ){
-			if( method_exists( $query,'set' ) ){
-				$opts = eos_scfm_get_main_options_array();
-				$posts_not_in = $query->get( 'post__not_in' );
-				if( !scfm_wp_is_mobile() ){
-					if( isset( $opts['mobile_ids'] ) && !empty( $opts['mobile_ids'] ) ){
-						$posts_not_in = array_merge( $posts_not_in,$opts['mobile_ids'] );
-						$query->set( 'post__not_in',$posts_not_in );
-					}
-				}
-				else{
-					if( isset( $opts['desktop_ids'] ) && !empty( $opts['desktop_ids'] ) ){
-						$posts_not_in = array_merge( $posts_not_in,$opts['desktop_ids'] );
-						$query->set( 'post__not_in',$posts_not_in );
-					}
+	if ( ( ! is_singular() || $query->is_home() ) && !is_admin() ){
+		if( method_exists( $query,'set' ) ){
+			$opts = eos_scfm_get_main_options_array();
+			$posts_not_in = $query->get( 'post__not_in' );
+			if( !scfm_wp_is_mobile() ){
+				if( isset( $opts['mobile_ids'] ) && !empty( $opts['mobile_ids'] ) ){
+					$posts_not_in = array_merge( $posts_not_in,$opts['mobile_ids'] );
+					$query->set( 'post__not_in',$posts_not_in );
 				}
 			}
-	  }
+			else{
+				if( isset( $opts['desktop_ids'] ) && !empty( $opts['desktop_ids'] ) ){
+					$posts_not_in = array_merge( $posts_not_in,$opts['desktop_ids'] );
+					$query->set( 'post__not_in',$posts_not_in );
+				}
+			}
+		}
 	}
 }
 
@@ -370,7 +421,7 @@ function eos_scfm_get_main_options_array(){
 	}
 }
 
-register_activation_hook( __FILE__,'eos_scfm_initialize_plugin' );
+register_activation_hook( __FILE__, 'eos_scfm_initialize_plugin' );
 //Actions triggered after plugin activation
 function eos_scfm_initialize_plugin( $networkwide ){
 	$options = eos_scfm_get_main_options_array();
@@ -383,6 +434,13 @@ function eos_scfm_initialize_plugin( $networkwide ){
 	}
 	$options['last_version'] = EOS_SCFM_PLUGIN_VERSION;
 	update_site_option( 'eos_scfm_main',$options );
+	flush_rewrite_rules();
+}
+
+register_deactivation_hook( __FILE__,'eos_scfm_plugin_deactivation' );
+//Actions triggered after plugin deactivation
+function eos_scfm_plugin_deactivation( $networkwide ){
+	flush_rewrite_rules();
 }
 
 add_filter( 'template_include', 'eos_scfm_override_templates', 99 );
@@ -466,3 +524,32 @@ function scfm_wp_is_mobile() {
     }
     return apply_filters( 'wp_is_mobile',$is_mobile );
 }
+
+add_filter( 'mod_rewrite_rules', function( $rewrite_rules ) {
+	if( isset( $_REQUEST['action'] ) && 'deactivate' === sanitize_text_field( $_REQUEST['action'] ) ) {
+		return $rewrite_rules;
+	}
+	$scfm_rules = '';
+	if( false === strpos( $rewrite_rules, 'Specific Content For Mobile' ) && apply_filters( 'scfm_add_mobile_query_string', true ) ) {
+		$scfm_rules = "\n# BEGIN Specific Content For Mobile\n";
+		$scfm_rules .= "<IfModule mod_rewrite.c>\n";
+		$scfm_rules .= "RewriteEngine On\n";
+		$scfm_rules .= "RewriteCond %{HTTP_USER_AGENT} Mobile|Android|Silk/|Kindle|BlackBerry|Opera\ Mini|Opera\ Mobi [NC]\n";
+		$scfm_rules .= "RewriteCond %{REQUEST_METHOD} !=POST\n";
+		$scfm_rules .= "RewriteCond %{QUERY_STRING} !scfm-mobile\n";
+		$scfm_rules .= "RewriteCond %{QUERY_STRING} !wc-ajax\n";
+		$scfm_rules .= "RewriteCond %{QUERY_STRING} !^$\n";
+		$scfm_rules .= "RewriteCond %{REQUEST_URI} !\.\n";
+		$scfm_rules .= "RewriteRule ^(.*)$ %{REQUEST_SCHEME}://%{HTTP_HOST}%{REQUEST_URI}\?%{QUERY_STRING}\&scfm-mobile=1 [L,NS,R=301]\n";
+		$scfm_rules .= "RewriteCond %{HTTP_USER_AGENT} Mobile|Android|Silk/|Kindle|BlackBerry|Opera\ Mini|Opera\ Mobi [NC]\n";
+		$scfm_rules .= "RewriteCond %{REQUEST_METHOD} !=POST\n";
+		$scfm_rules .= "RewriteCond %{QUERY_STRING} !scfm-mobile\n";
+		$scfm_rules .= "RewriteCond %{QUERY_STRING} !wc-ajax\n";
+		$scfm_rules .= "RewriteCond %{QUERY_STRING} ^$\n";
+		$scfm_rules .= "RewriteCond %{REQUEST_URI} !\.\n";
+		$scfm_rules .= "RewriteRule ^(.*)$ %{REQUEST_SCHEME}://%{HTTP_HOST}%{REQUEST_URI}\?scfm-mobile=1 [L,NS,R=301]\n";
+		$scfm_rules .= "</IfModule>\n";
+		$scfm_rules .= "# END Specific Content For Mobile\n\n";
+	}
+	return $scfm_rules . $rewrite_rules;
+} );
